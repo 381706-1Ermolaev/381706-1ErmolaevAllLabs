@@ -9,6 +9,6 @@ script:
   - cmake ../381706-1ErmolaevAllLabs
   - make -j
   - cd ./bin/
-  - ./381706-1ErmolaevAllLabs
+  - ./Vector/Vector
 notifications:
   email: false
