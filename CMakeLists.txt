@@ -4,6 +4,7 @@ set(PROJECT_NAME CmakeTest) #Создаем обычную локальную п
 project(${PROJECT_NAME}) # Название проекта
 set (Vector Vector)
 set (Vectorlib Vectorlib)
+set (Vectortest Vectortest)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
 if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компилятора вариантов сборки
@@ -11,8 +12,9 @@ if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компиля
 endif()
 
 #add_executable(${PROJECT_NAME} ${srcs} ${hdrs}) #Создаем проект с именем из переменной ${PROJECT_NAME}, в него добавляются файлы из переменных ${srcs} и ${hdrs}
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vectorlib ${CMAKE_CURRENT_SOURCE_DIR}/gtest)
 
 add_subdirectory(Vector) #Собираем проект в поддиректории lib1
 add_subdirectory(Vectorlib)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/Vectorlib)
+add_subdirectory(Vectortest) #Собираем проект в поддиректории lib1
+add_subdirectory(gtest)
