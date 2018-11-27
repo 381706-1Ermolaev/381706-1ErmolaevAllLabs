@@ -1,7 +1,10 @@
 #include <iostream>
+#include <locale.h>
 
-int main()
+using namespace std;
+
+int main ()
 {
-  std::cout << "HELL WORDLD\n";
-  return 0;
+	cout << "Hello world!" << endl;
+	return 0;
 }

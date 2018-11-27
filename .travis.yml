@@ -8,6 +8,7 @@ before_script:
 script:
   - cmake ../381706-1ErmolaevAllLabs
   - make -j
-  - ./Vector/Vector
+  - cd ./bin/
+  - ./381706-1ErmolaevAllLabs
 notifications:
   email: false
