@@ -6,18 +6,18 @@ using namespace std;
 template <class T>
 class TStack{
 protected:
-	int size;
-	T* mas;
-	int top;
+	int size;//Размер стека
+	T* mas;//Элементы стека
+	int top;//Верхушка
 public:
-	TStack();
-	TStack(int _Size);
-	TStack(TStack &A);
-	~TStack();
-	void Put(T A);
-	T Get();
-	bool IsFull();
-	bool IsEmpty();
+	TStack();//Конструктор по умолчанию
+	TStack(int _Size);//Конструктор с параметром
+	TStack(TStack &A);//Конструктор копирования
+	~TStack();//Деструктор
+	void Put(T A);//Положить
+	T Get();//Взять
+	bool IsFull();//Проверка на полноту
+	bool IsEmpty();//Проверка на пустоту
 };
 
 template <class T>
@@ -82,21 +82,15 @@ T TStack<T>::Get(){
 		throw "Empty";
 	else{
 		top--;
-		return mas[top++];
+		return mas[top];
 	}
 }
 template <class T>
 bool TStack<T>::IsEmpty(){
-	if (top == 0)
-		return true;
-	else
-		return false;
+	return (top == 0);
 }
 
 template <class T>
 bool TStack<T>::IsFull(){
-	if (top >= size)
-		return true;
-	else
-		return false;
+	return (top >= size);
 }

@@ -3,22 +3,33 @@
 set(PROJECT_NAME 381706-1ErmolaevAllLabs) #Создаем обычную локальную переменную с именем проекта
 project(${PROJECT_NAME}) # Название проекта
 
-set(Stack Stack)
-set(StackLib StackLib)
-set(StackTest StackTest)
+set(MELib MELib)
+set(Vector Vector)
+set(VectorLib VectorLib)
+set(VectorTest VectorTest)
+set(Matrix Matrix)
+set(MatrixLib MatrixLib)
+set(MatrixTest MatrixTest)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
 if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компилятора вариантов сборки
   set(CMAKE_BUILD_TYPE Release) #Если нет то устанавливаем Release
 endif()
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/StackLib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MELib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/VectorLib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/gtest)
 
 add_subdirectory(gtest)
-add_subdirectory(Stack)
-add_subdirectory(StackLib)
-add_subdirectory(StackTest)
+add_subdirectory(MELib)
+add_subdirectory(Vector)
+add_subdirectory(VectorLib)
+add_subdirectory(VectorTest)
+add_subdirectory(Matrix)
+add_subdirectory(MatrixLib)
+add_subdirectory(MatrixTest)
+
 
 file(GLOB hdrs "*.h*") #Добавляем в переменную hdrs все файлы с расширением .h
 file(GLOB srcs "*.cpp") #Добавляем в переменную srcs все файлы с расширением .h
