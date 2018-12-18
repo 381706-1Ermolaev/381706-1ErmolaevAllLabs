@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "ME.h"
 class TMonom
 {
 protected:
@@ -8,6 +8,7 @@ protected:
   double c;// Коэффициент
   const int n;//Кол-во переменных
 public:
+  TMonom() :n(0) { next = 0; power = 0; c = 0; }
   TMonom(int _n, unsigned* _power, double c);
   ~TMonom();
   TMonom(TMonom& monom);
@@ -22,6 +23,7 @@ public:
 
   TMonom& operator =(TMonom& monom);
   TMonom operator +(TMonom& monom);
+  TMonom operator *(TMonom& monom);
   TMonom operator -(TMonom& monom);
   bool operator ==(TMonom& monom);
   bool operator >(TMonom& monom);
@@ -39,8 +41,7 @@ TMonom::~TMonom()
   next = 0;
 }
 
-TMonom::TMonom(int _n, unsigned*
-  _power, double _c) :n(_n)
+TMonom::TMonom(int _n, unsigned* _power, double _c) :n(_n)
 {
   if (_n <= 0)
     throw - 1;
@@ -62,7 +63,8 @@ TMonom::TMonom(TMonom& monom): n(monom.n)
   c = monom.c;
   next = monom.next;
   power = new unsigned[n];
-  for (int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) 
+  {
     power[i] = monom.power[i];
   }
 }
@@ -93,20 +95,19 @@ void TMonom::SetNext(TMonom* _next)
 
 void TMonom::SetpPower(unsigned* _power)
 {
-  try {
-    for (int i = 0; i < n; i++)
-      if (_power[i] >= 0)
-      {
-        power[i] = _power[i];
-      }
-      else
-        throw 1;
-  }
-  catch (...)
-  {
-    throw 2;
-  }
+	for (int i = 0; i < n; i++) {
+		if (_power[i] >= 0)
+		{
+			power[i] = _power[i];
+		}
+		else
+		{
+			ME osh(-1, "Negative\n");
+			throw osh;
+		}
+	}
 }
+
 
 void TMonom::SetC(double _c)
 {
@@ -129,12 +130,42 @@ TMonom& TMonom::operator =(TMonom& monom)
 
 TMonom TMonom::operator +(TMonom& monom)
 {
-  if (n != monom.n || !(*this==monom))
-    throw 1;
-  TMonom temp(monom);
-  temp.c = c+ monom.c;
-  return temp;
+	if (*this == monom) {
+		TMonom temp(monom);
+		temp.c = c + monom.c;
+		return temp;
+	}
+	else
+	{
+		ME osh(-1, "Not exist\n");
+		throw osh;
+	}
 }
+
+TMonom TMonom::operator *(TMonom& monom)
+{	
+
+	if (n <= monom.GetN()) 
+	{
+		TMonom temp(monom);
+		temp.c = c + monom.c;
+		for (int i = 0; i < monom.GetN(); i++)
+			temp.power[i] = monom.power[i] + power[i];
+
+		return temp;
+	}
+	else
+	{
+		TMonom temp(*this);
+		temp.c = c + monom.c;
+		for (int i = 0; i < monom.GetN(); i++)
+			temp.power[i] = monom.power[i] + power[i];
+
+		return temp;
+	}
+}
+
+
 TMonom TMonom::operator -(TMonom& monom)
 {
   if ((n != monom.n) || !(*this == monom))
@@ -146,7 +177,11 @@ TMonom TMonom::operator -(TMonom& monom)
 bool TMonom::operator ==(TMonom& monom)
 {
   if (n != monom.n)
-    throw 1;
+  {
+	  ME osh(-1, "Different size\n");
+	  throw osh;
+  }
+
   for (int i = 0; i < n; i++) {
     if (power[i] != monom.power[i])
       return false;
@@ -156,7 +191,10 @@ bool TMonom::operator ==(TMonom& monom)
 bool TMonom::operator >(TMonom& monom)
 {
   if (n != monom.n)
-    throw 1;
+  {
+	  ME osh(-1, "Different size\n");
+	  throw osh;
+  }
 
   for (int i = 0; i < n; i++) {
     if (power[i] < monom.power[i])
@@ -168,7 +206,12 @@ bool TMonom::operator >(TMonom& monom)
 bool TMonom::operator <(TMonom& monom)
 {
   if (n != monom.n)
-    throw 1;
+  {
+	  ME osh(-1, "Different size\n");
+	  throw osh;
+  }
+
+
   for (int i = 0; i < n; i++) {
     if (power[i] > monom.power[i])
       return false;
@@ -179,9 +222,9 @@ bool TMonom::operator <(TMonom& monom)
 
 std::istream& operator >> (std::istream& _s, TMonom& Tm)
 {
-  std::cout << "input c\n" << std::endl;
+  std::cout << "input c:\n" << std::endl;
   _s >> Tm.c;
-  std::cout << "input power \n" << std::endl;
+  std::cout << "input power: \n" << std::endl;
   for (int i = 0; i < Tm.n; i++)
     _s >> Tm.power[i];
 
@@ -204,13 +247,3 @@ std::ostream& operator << (std::ostream& _s, TMonom& Tm)
   return _s;
 }
 
-int main() {
-  TMonom A(3, 0, 0);
-  std::cin >> A;
-  TMonom B(3, 0, 0);
-  std::cin >> B;
-  TMonom C(3, 0, 0);
-  C = A + B;
-  std::cout << C << "\n";
-  return 0;
-}

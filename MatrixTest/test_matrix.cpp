@@ -1,18 +1,18 @@
 #include "gtest.h"
 #include "Matrix.h"
 
-TEST(TMatrix, can_get_N)
+TEST(TMatrix, can_get_size)
 {
 	TMatrix<int> A(5);
-	ASSERT_EQ(5, A.GetN());
+	ASSERT_EQ(5, A.getSize());
 }
 
-TEST(TMatrix, throws_when_create_matrix_with_negative_N)
+TEST(TMatrix, throws_when_create_matrix_with_negative_size)
 {
 	ASSERT_ANY_THROW(TMatrix<int> A(-5));
 }
 
-TEST(TMatrix, can_create_matrix_with_positive_N)
+TEST(TMatrix, can_create_matrix_with_positive_size)
 {
 	ASSERT_NO_THROW(TMatrix<int> A(5));
 }
@@ -37,11 +37,6 @@ TEST(TMatrix, throws_when_set_element_with_negative_index)
 	ASSERT_ANY_THROW(A[-5][1] = 3);
 }
 
-TEST(TMatrix, can_assign_matrix_to_itself)
-{
-	TMatrix<int> A(4);
-	ASSERT_NO_THROW(A = A);
-}
 
 TEST(TMatrix, can_assign_matrix_of_equal_size)
 {

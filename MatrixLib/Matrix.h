@@ -1,76 +1,100 @@
 #pragma once
-#include "Vector.h"
+
 #include <iostream>
+#include "Vector.h"
+#include "ME.h"
 
 using namespace std;
 
 template <class T>
-class TMatrix : public Vector<Vector<T>{
+class TMatrix : public TVector<TVector<T> >{
 public:
-	TMatrix();
-	TMatrix(int _n);
-	TMatrix(TMatrix<T> &A);
-	~TMatrix();
-	TVector<T> operator [](int _I);
-	TMatrix<T> operator +(TMatrix<T> &A);
-	TMatrix<T> operator -(TMatrix<T> &A);
-	TMatrix<T>& operator =(const TMatrix<T> &A);
-	bool operator ==(const TMatrix &A) const;
-	int GetN();
+	TMatrix(int _N);
+	TMatrix(const TMatrix &A);                    
+	TMatrix(const TVector<TVector<T> > &A);		
+	virtual ~TMatrix<T>();
+     
+	TMatrix& operator= (const TMatrix &A);       
+	TMatrix  operator+ (const TMatrix &A);       
+	TMatrix  operator- (const TMatrix &A);        
+	bool operator==(const TMatrix &A);
 
-	template <class T1>
-	friend istream& operator >>(istream &istr, TMatrix<T1> &A)
+	template <class T> friend istream& operator>>(istream &in, TMatrix<T> &A)
 	{
-		for (int i = 0; i < A.TVector<T1>::Size; i++)
-			istr >> A.TVector<T1>::Vector[i];
-		return istr;
+		for (int i = 0; i < A.N; i++)
+			in >> A.V[i];
+		return in;
 	}
 	
-	template <class T1>
-	friend ostream& operator <<(ostream &ostr, TMatrix<T1> &A)
+	template <class T>  friend ostream & operator<<(ostream &out, const TMatrix<T> &A)
 	{
-		for (int i = 0; i < A.TVector<T1>::Size; i++)
-			ostr << A.TVector<T1>::Vector[i] << endl;
-		return ostr;
+		for (int i = 0; i < A.N; i++) {
+			for (int j = 1; j <= i; j++)
+				out << "\t";
+			out << A.V[i] << endl;
+		}
+		return out;
 	}
 };
 
+
 template <class T>
-TMatrix<T> :: TMatrix() 
+TMatrix<T>::TMatrix(int _N) : TVector<TVector<T> >(_N)
 {
-	TVector<T>::Size = 0;
-	N = 0;
-	TVector<T>::Vector = 0;
-}
-
-
-template <class T>
-TMatrix<T>::TMatrix(int _n) : Vector<Vector<T>>(_n){
-	if(_n < 0)
+	if (_N < 0)
 		throw 1;
 	else
-		for (int i = 0; i < _n; i++)
-			this->mas[i] = Vector <T>(_n - i);
+		for (int i = 0; i < _N; i++)
+			this->V[i] = TVector <T>(_N-i);
+}
+
+
+template <class T> 
+TMatrix<T>::TMatrix(const TMatrix<T> &A) : TVector<TVector<T> >(A) {}
+
+
+template <class T> 
+TMatrix<T>::TMatrix(const TVector<TVector<T> > &A) : TVector<TVector<T> >(A) {}
+
+
+template <class T>
+TMatrix<T>::~TMatrix() {
+	
 }
 
 
 template <class T>
-TMatrix<T> :: TMatrix(TMatrix<T> &A) 
+bool TMatrix<T>::operator==(const TMatrix<T> &A) 
 {
-	TVector<T>::Size = A.TVector<T>::Size;
-	N = A.N;
-	TVector<T>::Vector = new T [TVector<T>::Size];
-	for (int i = 0; i < TVector<T>::Size; i++)
-	{
-		TVector<T>::Vector[i] = A.TVector<T>::Vector[i];
-	}
+	return TVector<TVector<T> >::operator==(A); 
 }
+
+
 
 
 
 template <class T>
-TMatrix<T> :: ~TMatrix()
+TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &A)
 {
-	N = 0;
+	TVector<TVector<T> >::operator=(A); 
+	return *this;
 }
 
+
+template <class T> 
+TMatrix<T> TMatrix<T>::operator+(const TMatrix<T> &A)
+{
+	if (this->N != A.N)
+		throw 1;
+	else
+		return TVector <TVector<T> > :: operator+(A);
+}
+
+template <class T> 
+TMatrix<T> TMatrix<T>::operator-(const TMatrix<T> &A)
+{
+	if (this->N != A.N)
+		throw 1;
+	else
+		return TVector <TVector<T> > :: operator-(A);
+}

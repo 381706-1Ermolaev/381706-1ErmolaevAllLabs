@@ -1,7 +1,6 @@
 #include "gtest.h"
 #include "Vector.h"
-
-
+#include "ME.h"
 
 TEST(TVector, can_create_vector_with_positive_length)
 {
@@ -50,24 +49,10 @@ TEST(TVector, throws_when_set_element_with_too_large_index)
 TEST(TVector, can_get_size)
 {
 	TVector<int> A(66);
-	EXPECT_EQ(66, A.GetSize());
+	EXPECT_EQ(66, A.getSize());
 }
 
-TEST(TVector, can_change_size)
-{
-	TVector<int> A(2);
-	A.Change(4);
-	EXPECT_EQ(4, A.GetSize());
-}
 
-TEST(TVector, can_clean_vector)
-{
-	TVector<int> A(5);
-	for (int i = 0; i < 5; i++)
-		A[i] = i;
-	A.CleanVector();
-	EXPECT_EQ(0,A.GetSize()); 
-}
 
 TEST(TVector, can_assign_vector_to_itself)
 {

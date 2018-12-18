@@ -4,12 +4,9 @@ set(PROJECT_NAME 381706-1ErmolaevAllLabs) #Создаем обычную лок�
 project(${PROJECT_NAME}) # Название проекта
 
 set(MELib MELib)
-set(Vector Vector)
-set(VectorLib VectorLib)
-set(VectorTest VectorTest)
-set(Matrix Matrix)
-set(MatrixLib MatrixLib)
-set(MatrixTest MatrixTest)
+set(Polynomial Polynomial)
+set(PolynomialLib PolynomialLib)
+set(PolynomialTest PolynomialTest)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
 if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компилятора вариантов сборки
@@ -17,18 +14,15 @@ if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компиля
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MELib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/VectorLib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MatrixLib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/PolynomialLib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/gtest)
 
 add_subdirectory(gtest)
 add_subdirectory(MELib)
-add_subdirectory(Vector)
-add_subdirectory(VectorLib)
-add_subdirectory(VectorTest)
-add_subdirectory(Matrix)
-add_subdirectory(MatrixLib)
-add_subdirectory(MatrixTest)
+add_subdirectory(Polynomial)
+add_subdirectory(PolynomialLib)
+add_subdirectory(PolynomialTest)
+
 
 
 file(GLOB hdrs "*.h*") #Добавляем в переменную hdrs все файлы с расширением .h

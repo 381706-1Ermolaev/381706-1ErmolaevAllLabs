@@ -15,7 +15,9 @@ public:
 	TStack(TStack &A);//Конструктор копирования
 	~TStack();//Деструктор
 	void Put(T A);//Положить
-	T Get();//Взять
+	T Get();
+	T GetW();//Взять
+	int GetSize();//Ра
 	bool IsFull();//Проверка на полноту
 	bool IsEmpty();//Проверка на пустоту
 };
@@ -54,6 +56,7 @@ TStack<T>::TStack(TStack<T> &A){
 		mas = new T[size];
 		for (int i = 0; i < size; i++)
 			mas[i] = A.mas[i];
+
 	}
 }
 template <class T>
@@ -85,6 +88,16 @@ T TStack<T>::Get(){
 		return mas[top];
 	}
 }
+
+template <class T>
+T TStack<T>::GetW() {
+	if (IsEmpty())
+		throw "Empty";
+	else {
+		return mas[top-1];
+	}
+}
+
 template <class T>
 bool TStack<T>::IsEmpty(){
 	return (top == 0);
@@ -93,4 +106,9 @@ bool TStack<T>::IsEmpty(){
 template <class T>
 bool TStack<T>::IsFull(){
 	return (top >= size);
+}
+
+template <class T>
+int TStack<T>::GetSize() {
+	return size;
 }
