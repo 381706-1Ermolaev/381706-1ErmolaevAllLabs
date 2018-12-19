@@ -5,12 +5,12 @@ using namespace std;
 
 int  main ()
 {
-	TString A(3,"9-3");
+	TString A(10,"22+(22-22)");
 	A.print();
 
 	TQueue<char> B(One(A));
-	cout << f(B)<<endl;
 
+	cout << f(B)<<endl;
 
 	return 0;
 }

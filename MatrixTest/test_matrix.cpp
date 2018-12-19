@@ -1,5 +1,8 @@
 #include "gtest.h"
 #include "Matrix.h"
+#include <iostream>
+
+using namespace std;
 
 TEST(TMatrix, can_get_size)
 {
@@ -24,12 +27,12 @@ TEST(TMatrix, can_create_copied_matrix)
 	ASSERT_NO_THROW(TMatrix<int> B(A));
 }
 
-//TEST(TMatrix, can_set_and_get_element)
-//{
-//	TMatrix<int> A(4);
-//	A[0][3] = 3;
-//	EXPECT_EQ(3, A[0][3]);
-//}
+TEST(TMatrix, can_set_and_get_element)
+{
+	TMatrix<int> A(4);
+	A[0][3] = 3;
+	EXPECT_EQ(3, A[0][3]);
+}
 
 TEST(TMatrix, throws_when_set_element_with_negative_index)
 {
@@ -98,4 +101,28 @@ TEST(TMatrix, cant_subtract_matrixes_with_not_equal_size)
 	TMatrix<int> A(4);
 	TMatrix<int> B(10);
 	ASSERT_ANY_THROW(A - B);
+}
+
+TEST(TMatrix, can_division)
+{
+	TMatrix<double> A(2);
+	TMatrix<double> B(2);
+	TMatrix<double> C(2);
+	A[0][0] = 1;
+	A[1][0] = 1;
+	B[0][0] = 0.5;
+	B[1][0] = 0.5;
+	C[0][0] = 2;
+	C[1][0] = 2;
+	
+	ASSERT_TRUE(C == A / B);
+}
+
+TEST(TMatrix, cant_division_dif_size)
+{
+	TMatrix<double> A(2);
+	TMatrix<double> B(3);
+	
+	ASSERT_ANY_THROW(A / B);
+	
 }

@@ -11,7 +11,7 @@ public:
   TMonom() :n(0) { next = 0; power = 0; c = 0; }
   TMonom(int _n, unsigned* _power, double c);
   ~TMonom();
-  TMonom(TMonom& monom);
+  TMonom(TMonom *omonom);
   TMonom* GetNext();//Указатель на следующий
   unsigned* GetPower();//Степени
   double GetC();// Коэффициент
@@ -58,15 +58,10 @@ TMonom::TMonom(int _n, unsigned* _power, double _c) :n(_n)
   next = 0;
 }
 
-TMonom::TMonom(TMonom& monom): n(monom.n)
+TMonom::TMonom(TMonom &omonom)
 {
-  c = monom.c;
-  next = monom.next;
-  power = new unsigned[n];
-  for (int i = 0; i < n; i++) 
-  {
-    power[i] = monom.power[i];
-  }
+	
+
 }
 
 TMonom* TMonom::GetNext()

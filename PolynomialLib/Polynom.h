@@ -10,7 +10,7 @@ protected:
 public:
 	TPolynom() { start = end = 0; n = 0; }
 	TPolynom(int _n) { n = _n; start = end = 0;}
-	TPolynom(int _n, TMonom &_start, TMonom &_end) { n = _n; start =new TMonom (_start); end = new TMonom(_end); }
+	TPolynom(int _n, TMonom _start, TMonom _end) { n = _n; start =new TMonom (_start); end = new TMonom(_end); }
 	TPolynom(TPolynom &p);
 	void setStart(TMonom *_start) { start = _start; }
 	void setEnd(TMonom *_end) { end = _end; }

@@ -10,10 +10,10 @@ using namespace std;
 template<class T>
 class TVector{
 protected:
-	int N;
-	T *V;
+	int size;
+	T *v;
 public:
-	TVector():N(0),V(NULL){}
+	TVector():size(0),v(NULL){}
 	TVector(int size);
 	TVector(int size,T* X);
 	TVector(const TVector &O);
@@ -34,68 +34,68 @@ public:
 	double calcNorm(int p=2);
 	bool operator==(const TVector &O);
 	friend ostream& operator<<(ostream& os,const TVector& O){
-		cout<<"TVector:"<<endl;
-		for(int i=0;i<O.N;i++)
-			os<<"["<<i<<"]="<<O.V[i]<<endl;
+		for(int i=0;i<O.size;i++)
+			os<<"["<<O.v[i]<<"]";
+
 		os<<endl;
 		return os;
 	}
 
 	friend istream& operator>>(istream& is,TVector& O){
-		for(int i=0;i<O.N;i++)
-			is>>O.V[i];
+		for(int i=0;i<O.size;i++)
+			is>>O.v[i];
 
 		return is;
 	}
 
-	~TVector(){delete []V;N=0;}
+	~TVector(){delete []v; size =0;}
 };
 
 
 template<class T>
-TVector<T>::TVector(int size,T* X){
-	N=size;
-	V=new T[N];
-	for(int i=0;i<N;i++)
-		V[i]=X[i];
+TVector<T>::TVector(int _size,T* X){
+	size = _size;
+	v = new T[size];
+	for(int i=0;i<size;i++)
+		v[i]=X[i];
 }
 
 template<class T>
-TVector<T>::TVector(int size):N(size){
-	V=new T[N];
-	for(int i=0;i<N;i++)
-		V[i]=0;
+TVector<T>::TVector(int _size):size(_size){
+	v=new T[size];
+	for(int i=0;i<size;i++)
+		v[i]=0;
 }
 
 template<class T>
 TVector<T>::TVector(const TVector<T> &O){
-	N=O.N;
-	V=new T[N];
-	for(int i=0;i<N;i++)
-		V[i]=O.V[i];	
+	size =O.size;
+	v=new T[size];
+	for(int i=0;i<size;i++)
+		v[i]=O.v[i];	
 }
 
 template<class T>
-int TVector<T>::getSize(){return N;}
+int TVector<T>::getSize(){return size;}
 
 template<class T> 
 T& TVector<T>::operator[](int i){
-	if(i<0||i>=N)
+	if(i<0||i>= size)
 	{
 		ME osh(-1,"Not exist\n");
 		throw osh;
 	}
-	return V[i];
+	return v[i];
 }
 
 template<class T>
 T& TVector<T>::operator()(int i){
-	if(i<=0||i>N)
+	if(i<=0||i>size)
 	{
 		ME osh(-1,"Not exist\n");
 		throw osh;
 	}
-	return V[i-1];
+	return v[i-1];
 }
 
 template<class T>
@@ -108,14 +108,14 @@ TVector<T>& TVector<T>::operator=(const TVector<T> &O){
 	
 
 
-	if(N!=O.N)
+	if(size !=O.size)
 	{
-		delete[] V;
-		N=O.N;
-		V=new T[N];
+		delete[] v;
+		size =O.size;
+		v=new T[size];
 	}
-	for(int i=0;i<N;i++)
-		V[i]=O.V[i];
+	for(int i=0;i<size;i++)
+		v[i]=O.v[i];
 	return *this;
 }
 
@@ -124,8 +124,8 @@ TVector<T> TVector<T>::operator+()const{return *this;}
 
 template<class T>
 TVector<T> TVector<T>::operator++(){
-	for(int i=0;i<N;i++)
-		V[i]++;
+	for(int i=0;i<size;i++)
+		v[i]++;
 
 	return *this;
 }
@@ -133,8 +133,8 @@ TVector<T> TVector<T>::operator++(){
 template<class T>
 TVector<T> TVector<T>::operator++(int){
 	TVector<T> temp(*this);
-	for(int i=0;i<N;i++)
-		++V[i];
+	for(int i=0;i<size;i++)
+		++v[i];
 
 	return temp;
 }
@@ -142,70 +142,70 @@ TVector<T> TVector<T>::operator++(int){
 template<class T>
 TVector<T> TVector<T>::operator-()const{
 	TVector<T> a(*this);
-	for(int i=0;i<N;i++)
-		a.V[i]=-V[i];
+	for(int i=0;i<size;i++)
+		a.v[i]=-v[i];
 	return a;
 }
 
 template<class T>
 TVector<T> TVector<T>::operator--(){
-	for(int i=0;i<N;i++)
-		V[i]--;
+	for(int i=0;i<size;i++)
+		v[i]--;
 	return *this;
 }
 
 template<class T>
 TVector<T> TVector<T>::operator--(int){
 	TVector<T> temp(*this);
-	for(int i=0;i<N;i++)
-		--V[i];
+	for(int i=0;i<size;i++)
+		--v[i];
 	return temp;
 }
 
 template<class T>
 TVector<T> TVector<T>::operator+(TVector<T> O){
-	if(N!=O.N)
+	if(size !=O.size)
 	{
 		ME osh(0,"dimV1 != dimV2");
 		throw osh;
 	}
-	TVector<T> a(N);
-	for(int i=0;i<N;i++)
-		a.V[i]=V[i]+O.V[i];
+	TVector<T> a(size);
+	for(int i=0;i<size;i++)
+		a.v[i]=v[i]+O.v[i];
 	return a;
 }
 
 template<class T>
 TVector<T> TVector<T>::operator-(TVector<T> O){
-	if(N!=O.N)
+	if(size !=O.size)
 	{
 		ME osh(0,"dimV1 != dimV2");
 		throw osh;
 	}
-	TVector<T> a(N);
-	for(int i=0;i<N;i++)
-		a.V[i]=V[i]-O.V[i];
+	TVector<T> a(size);
+	for(int i=0;i<size;i++)
+		a.v[i]=v[i]-O.v[i];
 	return a;
 }
 
 template<class T>
 double TVector<T>::operator*(const TVector<T> &O){
-	if(N!=O.N)
+	if(size !=O.size)
 	{
 		ME osh(0,"dimV1 != dimV2");
 		throw osh;
 	}
 	double tmp=0;
-	for(int i=0;i<N;i++)
-		tmp+=V[i]*O.V[i];
+	for(int i=0;i<size;i++)
+		tmp+=v[i]*O.v[i];
 	return tmp;
 }
 
 template<class T>
 TVector<T> TVector<T>::operator*(T K){
-	TVector<T> a(N);
-	for(int i=0;i<N;i++)
-		a.V[i]=K*V[i];
+	TVector<T> a(size);
+	for(int i=0;i<size;i++)
+		a.v[i]=K*v[i];
 	return a;
 }
 
@@ -218,17 +218,17 @@ double TVector<T>::calcNorm(int p){
 	}
 	if(p==1)
 	{
-		double max=abs(V[0]);
-		for(int i=1;i<N;i++)
-			if(abs(V[i]>max))
-				max=abs(V[i]);
+		double max=abs(v[0]);
+		for(int i=1;i<size;i++)
+			if(abs(v[i]>max))
+				max=abs(v[i]);
 		return max;
 	}
 	if(p==2)
 	{
 		double tmp=0;
-		for(int i=0;i<N;i++)
-			tmp+=V[i]*V[i];
+		for(int i=0;i<size;i++)
+			tmp+=v[i]*v[i];
 		return sqrt(tmp);
 	}
 	return 1;
@@ -236,16 +236,17 @@ double TVector<T>::calcNorm(int p){
 
 template<class T>
 bool TVector<T>::operator==(const TVector<T> &O){
-	if(N!=O.N)
+	if(size !=O.size)
 	{
+		
 		ME osh(4, "Different size");
 		throw osh;
 	}
 
-		for(int i=0;i<N;i++)
-			if(!(V[i]==O.V[i]))
+		for(int i=0;i<size;i++)
+			if (!(v[i] == O.v[i])) {
 				return 0;
-
+			}
 		return 1;
 }
 #endif

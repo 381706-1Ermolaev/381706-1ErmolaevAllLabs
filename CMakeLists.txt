@@ -4,9 +4,12 @@ set(PROJECT_NAME 381706-1ErmolaevAllLabs) #Создаем обычную лок�
 project(${PROJECT_NAME}) # Название проекта
 
 set(MELib MELib)
-set(Polynomial Polynomial)
-set(PolynomialLib PolynomialLib)
-set(PolynomialTest PolynomialTest)
+set(Poland Poland)
+set(PolandLib PolandLib)
+set(StackLib StackLib)
+set(QueueLib QueueLib)
+set(PolandTest PolandTest)
+
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Configs" FORCE) #Создается переменная CMAKE_CONFIGURATION_TYPES со значением "Debug;Release" и меткой/разделом Configs, переменная сохраниется в специальном файле доступном из всех файлов,
 if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компилятора вариантов сборки
@@ -14,14 +17,18 @@ if(NOT CMAKE_BUILD_TYPE) # проверка имеющихся у компиля
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/MELib)
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/PolynomialLib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/PolandLib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/StackLib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/QueueLib)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/gtest)
 
 add_subdirectory(gtest)
 add_subdirectory(MELib)
-add_subdirectory(Polynomial)
-add_subdirectory(PolynomialLib)
-add_subdirectory(PolynomialTest)
+add_subdirectory(Poland)
+add_subdirectory(PolandLib)
+add_subdirectory(StackLib)
+add_subdirectory(QueueLib)
+add_subdirectory(PolandTest)
 
 
 

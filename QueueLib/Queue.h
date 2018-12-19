@@ -15,6 +15,7 @@ public:
 	TQueue(TQueue <T> &A);//Конструктор копирования
 	void Put(T A);//Положить в конец очереди
 	T Get();//Взять первый элемент
+	T GetW() { return mas[top]; }
 	bool IsFull();//Проверка на полноту
 	bool IsEmpty();//Проверка на пустоту
 };
@@ -58,6 +59,8 @@ T TQueue<T>::Get() {
 		return tmp;
 	}
 }
+
+
 
 template <class T>
 bool TQueue<T>::IsFull() {

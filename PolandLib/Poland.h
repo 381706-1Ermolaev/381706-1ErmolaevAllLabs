@@ -22,26 +22,18 @@ public:
 			mas[i] = other.mas[i];
 	}
 	char& operator[](int i) {return mas[i];}
-	void print() {
+	void print() 
+	{
 		for (int i = 0; i < size; i++)
 			cout << mas[i];
 
 		cout << endl;
-													}
+	}
 
 
 	int getSize() { return size; }
 
 };
-
-//
-//
-//template<class T>
-//class Poland {
-//public:
-//	bool isnumber(char C);
-//
-//};
 
 int Getprior(const char a)
 {
@@ -71,32 +63,50 @@ bool IsOperation(char a)
 
 TQueue<char> One(TString s)
 {
-	TQueue<char> res(s.getSize());
-	TStack<char> st(s.getSize());
+	TQueue<char> res(3*s.getSize());
+	TStack<char> st(3*s.getSize());
 	for (int i = 0; i<s.getSize(); i++)
 	{
 		if (!IsOperation(s[i]))
+		{
+			res.Put('[');
+			
+			while ((i + 1 != s.getSize()) && !IsOperation(s[i + 1])) {
+				res.Put(s[i]);
+				i++;
+				cout << "1111"<<endl;
+			}
+
 			res.Put(s[i]);
+			res.Put(']');
+		}
 		else
 		{
 			if (s[i] == ')')
 			{
-				while (st.GetW()!= '(')
+				while (st.GetW() != '(')
 					res.Put(st.Get());
 				st.Get();
 			}
-			else 
-				if (st.IsEmpty())
-				st.Put(s[i]);
-				else 
-					if (Getprior(s[i])>=Getprior(st.GetW()))
+			else
+			{	
+				if (s[i] == '(')
 					st.Put(s[i]);
+				else
+				  if (st.IsEmpty())
+					st.Put(s[i]);
+				  else
+					if (Getprior(s[i]) >= Getprior(st.GetW()))
+						st.Put(s[i]);
 					else
 					{
-					while (Getprior(s[i]) < Getprior(st.GetW()))
-						res.Put(st.Get());
+						while (Getprior(s[i]) < Getprior(st.GetW()))
+							st.Put(s[i]);
 					}
+			}
 		}
+
+		
 	}
 	while (!st.IsEmpty())
 		res.Put(st.Get());
@@ -105,7 +115,7 @@ TQueue<char> One(TString s)
 }
 
 int num(char A) {
-	return A-'0';
+	return A - '0';
 }
 
 double f(TQueue<char> q)
@@ -115,8 +125,23 @@ double f(TQueue<char> q)
 	while (!q.IsEmpty())
 	{
 		char A = q.Get();
-		if (!IsOperation(A))
-			st2.Put(num(A));
+		if (!IsOperation(A)) 
+		{
+			double tmp;
+			A = q.Get();
+			
+			tmp = num(A);
+			
+			while ((q.GetW() != ']') && (!q.IsEmpty())) 
+			{
+				A = q.Get();
+				
+				tmp = tmp*10 + num(A);
+				
+			}
+			q.Get();
+			st2.Put(tmp);
+		}
 		else
 		{
 			double y = st2.Get();
