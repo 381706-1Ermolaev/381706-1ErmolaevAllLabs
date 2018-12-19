@@ -65,49 +65,59 @@ TQueue<char> One(TString s)
 {
 	TQueue<char> res(3*s.getSize());
 	TStack<char> st(3*s.getSize());
-	for (int i = 0; i<s.getSize(); i++)
+	for (int i = 0; i < s.getSize(); i++)
 	{
-		if (!IsOperation(s[i]))
-		{
-			res.Put('[');
+		if (i == 0)
+			if (s[0] == '-') {
+				res.Put('[');
+				res.Put('0');
+				res.Put(']');
+				
+			}
 			
-			while ((i + 1 != s.getSize()) && !IsOperation(s[i + 1])) {
-				res.Put(s[i]);
-				i++;
-				cout << "1111"<<endl;
-			}
+				if (!IsOperation(s[i]))
+				{
+					res.Put('[');
 
-			res.Put(s[i]);
-			res.Put(']');
-		}
-		else
-		{
-			if (s[i] == ')')
-			{
-				while (st.GetW() != '(')
-					res.Put(st.Get());
-				st.Get();
-			}
-			else
-			{	
-				if (s[i] == '(')
-					st.Put(s[i]);
+					while ((i + 1 != s.getSize()) && !IsOperation(s[i + 1])) {
+						res.Put(s[i]);
+						i++;
+					}
+
+					res.Put(s[i]);
+					res.Put(']');
+				}
 				else
-				  if (st.IsEmpty())
-					st.Put(s[i]);
-				  else
-					if (Getprior(s[i]) >= Getprior(st.GetW()))
-						st.Put(s[i]);
+				{
+					if (s[i] == ')')
+					{
+						while (st.GetW() != '(')
+							res.Put(st.Get());
+						st.Get();
+					}
 					else
 					{
-						while (Getprior(s[i]) < Getprior(st.GetW()))
+						if (s[i] == '(')
 							st.Put(s[i]);
-					}
-			}
-		}
+						else
+							if (st.IsEmpty())
+								st.Put(s[i]);
+							else
+								if (Getprior(s[i]) > Getprior(st.GetW()))
+									st.Put(s[i]);
+								else
+								{
+									while ((!st.IsEmpty())&&(Getprior(s[i]) <= Getprior(st.GetW())))
+										res.Put(st.Get());
 
-		
-	}
+									st.Put(s[i]);
+								}
+					}
+				}
+
+
+			}
+	
 	while (!st.IsEmpty())
 		res.Put(st.Get());
 
