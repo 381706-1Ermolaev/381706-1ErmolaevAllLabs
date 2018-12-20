@@ -8,6 +8,21 @@ TEST(Poland, can_add) {
 	EXPECT_EQ(17, f(B));
 }
 
+TEST(Poland, can_add_two_digit_number) {
+	TString A(5, "43+57");
+	TQueue<char> B(One(A));
+
+	EXPECT_EQ(100, f(B));
+}
+
+TEST(Poland, negative_number) {
+	TString A(5, "-1000");
+	TQueue<char> B(One(A));
+
+	EXPECT_EQ(-1000, f(B));
+}
+
+
 TEST(Poland, can_add_3_param) {
 	TString A(5, "9+8+2");
 	TQueue<char> B(One(A));
@@ -58,7 +73,33 @@ TEST(Poland, can_split) {
 	EXPECT_EQ(4, f(B));
 }
 
+TEST(Poland, can_multi_1) {
+	TString A(10, "(43+57)*43");
+	TQueue<char> B(One(A));
 
+	EXPECT_EQ(4300, f(B));
+}
+
+TEST(Poland, can_multi_2) {
+	TString A(10, "(43+57)/20");
+	TQueue<char> B(One(A));
+
+	EXPECT_EQ(5, f(B));
+}
+
+TEST(Poland, can_multi_3) {
+	TString A(14, "(43+57)/(20+5)");
+	TQueue<char> B(One(A));
+
+	EXPECT_EQ(4, f(B));
+}
+
+TEST(Poland, can_multi_with_negative_first_number) {
+	TString A(13, "-5+(43+57)/20");
+	TQueue<char> B(One(A));
+
+	EXPECT_EQ(0, f(B));
+}
 
 
 

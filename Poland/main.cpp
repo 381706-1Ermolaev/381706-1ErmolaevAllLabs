@@ -5,7 +5,7 @@ using namespace std;
 
 int  main ()
 {
-	TString A(5,"-10+2");
+	TString A(15,"((33-22)*33-10)");
 	A.print();
 
 	TQueue<char> B(One(A));

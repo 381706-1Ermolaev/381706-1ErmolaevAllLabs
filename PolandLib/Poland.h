@@ -93,6 +93,7 @@ TQueue<char> One(TString s)
 					{
 						while (st.GetW() != '(')
 							res.Put(st.Get());
+
 						st.Get();
 					}
 					else
@@ -114,8 +115,6 @@ TQueue<char> One(TString s)
 								}
 					}
 				}
-
-
 			}
 	
 	while (!st.IsEmpty())
